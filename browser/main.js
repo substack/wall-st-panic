@@ -12,9 +12,14 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
     emoney.parentNode.removeChild(emoney);
     
     var rain = createRain(emoney);
+    rain.on('cash', function (n) {
+        console.log(n);
+    });
     rain.appendTo(root.querySelector('svg'));
     
-    setInterval(function () { rain.drop() }, 2000);
+    setInterval(function () {
+        rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
+    }, 2000);
     
     window.addEventListener('keydown', function (ev) {
         var name = ev.keyIdentifier;

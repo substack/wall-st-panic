@@ -1,11 +1,15 @@
 var createElement = require('./element.js');
 var createMoney = require('./money.js');
 var collide = require('box-collide');
+var inherits = require('inherits');
+var EventEmitter = require('events').EventEmitter;
 
 module.exports = Rain;
+inherits(Rain, EventEmitter);
 
 function Rain (elem) {
     if (!(this instanceof Rain)) return new Rain(elem);
+    EventEmitter.call(this);
     
     this.element = createElement('g');
     this.emoney = elem;
@@ -16,9 +20,9 @@ Rain.prototype.appendTo = function (target) {
     target.appendChild(this.element);
 };
 
-Rain.prototype.drop = function () {
+Rain.prototype.drop = function (n) {
     var self = this;
-    var m = createMoney(this.emoney.cloneNode(true));
+    var m = createMoney(this.emoney.cloneNode(true), n);
     m.appendTo(this.element);
     this.money.push(m);
     m.once('miss', function () { self.remove(m) });
@@ -42,7 +46,7 @@ Rain.prototype.check = function (player) {
         
         if (collide(player.bbox(), m.bbox())) {
             this.remove(m);
-            console.log('yo');
+            this.emit('cash', m.cash)
         }
     }
 };

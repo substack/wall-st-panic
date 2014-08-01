@@ -1,13 +1,12 @@
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
 var createElement = require('./element.js');
-var abspos = require('./abspos.js');
 
 module.exports = Money;
 inherits(Money, EventEmitter);
 
-function Money (elem) {
-    if (!(this instanceof Money)) return new Money(elem);
+function Money (elem, cash) {
+    if (!(this instanceof Money)) return new Money(elem, cash);
     EventEmitter.call(this);
     
     this.element = createElement('g');
@@ -15,6 +14,7 @@ function Money (elem) {
     
     this.pos = { x: Math.random() * 595 - 485, y: -350 };
     this.v = { x: 0, y: 1 };
+    this.cash = cash;
     this.tick(0);
 }
 
