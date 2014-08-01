@@ -14,7 +14,7 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
     var moneystorm = createRain(emoney);
     moneystorm.appendTo(root.querySelector('svg'));
     
-    setInterval(function () { moneystorm.rain() }, 100);
+    setInterval(function () { moneystorm.rain() }, 2000);
     
     window.addEventListener('keydown', function (ev) {
         var name = ev.keyIdentifier;
@@ -37,6 +37,7 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
         
         player.tick(dt);
         moneystorm.tick(dt);
+        moneystorm.check(player);
         
         setTimeout(function () {
             window.requestAnimationFrame(tick);

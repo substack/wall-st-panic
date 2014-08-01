@@ -16,6 +16,7 @@ function Player (elem) {
     this.a = { x: 0, y: 0 };
     this.v = { x: 0, y: 0 };
     this.pos = { x: 0, y: 0 };
+    this.apos = { x: 384 + 48 / 2, y: 37 + 62 / 2 };
 }
 
 Player.prototype.jump = function () {
