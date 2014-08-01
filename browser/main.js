@@ -1,6 +1,6 @@
 var xhr = require('xhr');
 var createPlayer = require('./player.js');
-var createMoney = require('./money.js');
+var createRain = require('./rain.js');
 
 var root = document.querySelector('#root');
 
@@ -11,10 +11,10 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
     var emoney = root.querySelector('svg #money');
     emoney.parentNode.removeChild(emoney);
     
-    var money = createMoney(emoney);
-    money.appendTo(root.querySelector('svg'));
+    var moneystorm = createRain(emoney);
+    moneystorm.appendTo(root.querySelector('svg'));
     
-    setInterval(function () { money.rain() }, 1000);
+    setInterval(function () { moneystorm.rain() }, 100);
     
     window.addEventListener('keydown', function (ev) {
         var name = ev.keyIdentifier;
@@ -36,7 +36,7 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
         last = now;
         
         player.tick(dt);
-        money.tick(dt);
+        moneystorm.tick(dt);
         
         setTimeout(function () {
             window.requestAnimationFrame(tick);
