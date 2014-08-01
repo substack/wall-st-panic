@@ -7,7 +7,8 @@
     "wall-st-panic": "bin/cmd.js"
   },
   "dependencies": {
-    "ecstatic": "~0.5.3"
+    "ecstatic": "~0.5.3",
+    "inherits": "~2.0.1"
   },
   "devDependencies": {
     "tape": "^2.13.2",

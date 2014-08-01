@@ -16,9 +16,15 @@ Rain.prototype.appendTo = function (target) {
 };
 
 Rain.prototype.rain = function () {
+    var self = this;
     var m = createMoney(this.emoney.cloneNode(true));
     m.appendTo(this.element);
     this.money.push(m);
+    m.once('miss', function () {
+        var ix = self.money.indexOf(m);
+        self.money.splice(ix, 1);
+        self.element.removeChild(m.element);
+    });
 };
 
 Rain.prototype.tick = function (dt) {

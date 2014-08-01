@@ -1,8 +1,13 @@
+var inherits = require('inherits');
+var EventEmitter = require('events').EventEmitter;
 var createElement = require('./element.js');
+
 module.exports = Money;
+inherits(Money, EventEmitter);
 
 function Money (elem) {
     if (!(this instanceof Money)) return new Money(elem);
+    EventEmitter.call(this);
     
     this.element = createElement('g');
     this.element.appendChild(elem);
@@ -17,7 +22,8 @@ Money.prototype.appendTo = function (target) {
 };
 
 Money.prototype.tick = function (dt) {
-    this.pos.y += dt * this.v.y;
+    this.pos.y += dt * this.v.y / 2;
     var tr = this.pos.x + ',' + this.pos.y;
     this.element.setAttribute('transform', 'translate(' + tr + ')');
+    if (this.pos.y > 100) this.emit('miss');
 };
