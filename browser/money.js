@@ -20,7 +20,6 @@ function Money (elem) {
 
 Money.prototype.appendTo = function (target) {
     target.appendChild(this.element);
-    this.apos = abspos(this.element);
 };
 
 Money.prototype.tick = function (dt) {
@@ -28,4 +27,8 @@ Money.prototype.tick = function (dt) {
     var tr = this.pos.x + ',' + this.pos.y;
     this.element.setAttribute('transform', 'translate(' + tr + ')');
     if (this.pos.y > 100) this.emit('miss');
+};
+
+Money.prototype.bbox = function () {
+    return this.element.getBoundingClientRect();
 };

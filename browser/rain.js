@@ -1,5 +1,6 @@
 var createElement = require('./element.js');
 var createMoney = require('./money.js');
+var collide = require('box-collide');
 
 module.exports = Rain;
 
@@ -38,20 +39,10 @@ Rain.prototype.tick = function (dt) {
 Rain.prototype.check = function (player) {
     for (var i = 0; i < this.money.length; i++) {
         var m = this.money[i];
-        if (dist(pos(m), pos(player)) < 50) {
+        
+        if (collide(player.bbox(), m.bbox())) {
             this.remove(m);
+            console.log('yo');
         }
     }
 };
-
-function pos (m) {
-    return {
-        x: m.apos.x + m.pos.x,
-        y: m.apos.y + m.pos.y
-    };
-}
-
-function dist (a, b) {
-    var dx = a.x - b.x, dy = a.y - b.y;
-    return Math.sqrt(dx*dx + dy*dy);
-}

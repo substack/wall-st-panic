@@ -1,5 +1,4 @@
 var createElement = require('./element.js');
-var abspos = require('./abspos.js');
 
 module.exports = Player;
 
@@ -17,7 +16,6 @@ function Player (elem) {
     this.a = { x: 0, y: 0 };
     this.v = { x: 0, y: 0 };
     this.pos = { x: 0, y: 0 };
-    this.apos = abspos(this.element);
 }
 
 Player.prototype.jump = function () {
@@ -49,3 +47,7 @@ Player.prototype.tick = function (dt) {
     var tr = this.pos.x + ',' + this.pos.y;
     this.element.setAttribute('transform', 'translate(' + tr + ')');
 }
+
+Player.prototype.bbox = function () {
+    return this.element.getBoundingClientRect();
+};
