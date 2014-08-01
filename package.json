@@ -1,0 +1,41 @@
+{
+  "name": "wall-st-panic",
+  "version": "1.0.0",
+  "description": "wall st panic, the game!",
+  "main": "index.js",
+  "bin": {
+    "wall-st-panic": "bin/cmd.js"
+  },
+  "dependencies": {
+    "ecstatic": "~0.5.3"
+  },
+  "devDependencies": {
+    "tape": "^2.13.2",
+    "watchify": "^1.0.0",
+    "browserify": "^5.9.1"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "build": "browserify browser/main.js -o static/bundle.js",
+    "watch": "watchify browser/main.js -o static/bundle.js -dv",
+    "start": "bin/cmd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/wall-st-panic.git"
+  },
+  "homepage": "https://github.com/substack/wall-st-panic",
+  "keywords": [
+    "game",
+    "svg",
+    "web",
+    "videogame",
+    "fun"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}
