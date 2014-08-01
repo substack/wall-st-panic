@@ -15,7 +15,7 @@ Rain.prototype.appendTo = function (target) {
     target.appendChild(this.element);
 };
 
-Rain.prototype.rain = function () {
+Rain.prototype.drop = function () {
     var self = this;
     var m = createMoney(this.emoney.cloneNode(true));
     m.appendTo(this.element);
@@ -39,7 +39,6 @@ Rain.prototype.check = function (player) {
     for (var i = 0; i < this.money.length; i++) {
         var m = this.money[i];
         if (dist(pos(m), pos(player)) < 50) {
-            console.log('yo');
             this.remove(m);
         }
     }

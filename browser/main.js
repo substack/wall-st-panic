@@ -11,10 +11,10 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
     var emoney = root.querySelector('svg #money');
     emoney.parentNode.removeChild(emoney);
     
-    var moneystorm = createRain(emoney);
-    moneystorm.appendTo(root.querySelector('svg'));
+    var rain = createRain(emoney);
+    rain.appendTo(root.querySelector('svg'));
     
-    setInterval(function () { moneystorm.rain() }, 2000);
+    setInterval(function () { rain.drop() }, 2000);
     
     window.addEventListener('keydown', function (ev) {
         var name = ev.keyIdentifier;
@@ -36,8 +36,8 @@ xhr({ uri: '/game.svg' }, function (err, res, body) {
         last = now;
         
         player.tick(dt);
-        moneystorm.tick(dt);
-        moneystorm.check(player);
+        rain.tick(dt);
+        rain.check(player);
         
         setTimeout(function () {
             window.requestAnimationFrame(tick);
