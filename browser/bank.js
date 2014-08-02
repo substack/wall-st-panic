@@ -37,8 +37,8 @@ Bank.prototype.set = function (n) {
         var d = digits[i];
         var elem = this.numbers[d].cloneNode(true);
         var p = this.pos[i];
-        var o = this.pos[Number(d)];
-        
+        var o = this.pos[d];
+
         var tr = (p.left - o.left) + ',' + (p.top - o.top);
         elem.setAttribute('transform', 'translate(' + tr + ')');
         
