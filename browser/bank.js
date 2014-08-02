@@ -43,7 +43,6 @@ Bank.prototype.set = function (n) {
         //elem.setAttribute('transform', 'translate(' + tr + ')');
         this.root.appendChild(elem);
         this.elements.push(elem);
-console.log(elem); 
     }
 };
 

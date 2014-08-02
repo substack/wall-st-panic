@@ -1,6 +1,7 @@
 var xhr = require('xhr');
-var createPlayer = require('./player.js');
-var createRain = require('./rain.js');
+var Player = require('./player.js');
+var Rain = require('./rain.js');
+var Engine = require('./engine.js');
 
 var root = document.querySelector('#root');
 
@@ -9,14 +10,14 @@ var imfile = url.resolve(location.href, 'game.svg');
 
 xhr({ uri: imfile }, function (err, res, body) {
     root.innerHTML = body;
-    var player = createPlayer(root.querySelector('svg #player'));
+    var player = Player(root.querySelector('svg #player'));
     var bank = require('./bank.js')(root);
     window.bank = bank;
     
     var emoney = root.querySelector('svg #money');
     emoney.parentNode.removeChild(emoney);
     
-    var rain = createRain(emoney);
+    var rain = Rain(emoney);
     rain.on('cash', function (n) {
         //console.log(n);
     });
@@ -37,20 +38,14 @@ xhr({ uri: imfile }, function (err, res, body) {
         else if (ev.which === 32) {
             player.jump();
         }
+        else if (name === 'F1') {
+            engine.toggle();
+        }
+        else return;
+        
+        ev.preventDefault();
     });
     
-    var last = Date.now();
-    (function tick () {
-        var now = Date.now();
-        var dt = now - last;
-        last = now;
-        
-        player.tick(dt);
-        rain.tick(dt);
-        rain.check(player);
-        
-        setTimeout(function () {
-            window.requestAnimationFrame(tick);
-        }, 20);
-    })();
+    var engine = Engine(player, rain);
+    engine.run();
 });
