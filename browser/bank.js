@@ -32,15 +32,17 @@ Bank.prototype.set = function (n) {
         elem.parentNode.removeChild(elem);
     }
     this.elements = [];
+    var sh = 10 - digits.length;
     
     for (var i = 0; i < digits.length; i++) {
         var d = digits[i];
         var elem = this.numbers[d].cloneNode(true);
-        var p = this.pos[i];
+        var p = this.pos[sh+i];
         var o = this.pos[d];
-
-        var tr = (p.left - o.left) + ',' + (p.top - o.top);
-        elem.setAttribute('transform', 'translate(' + tr + ')');
+        
+        var dx = p.left - o.left;
+        var dy = p.top - o.top;
+        elem.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
         
         this.root.appendChild(elem);
         this.elements.push(elem);
