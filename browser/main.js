@@ -20,6 +20,7 @@ Object.keys(sprites).forEach(function (key) {
 
 var player = Player(root.querySelector('svg #player'));
 var bank = require('./bank.js')(root);
+var eparent = player.element.parentNode;
 
 var emoney = root.querySelector('svg #money');
 emoney.parentNode.removeChild(emoney);
@@ -50,7 +51,11 @@ window.addEventListener('keydown', function (ev) {
     ev.preventDefault();
 });
 
-var engine = Engine(player, rain);
+var engine = Engine(function (dt) {
+    player.tick(dt);
+    rain.tick(dt);
+    rain.check(player);
+});
 engine.setInterval(function () {
     rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
 }, 500);

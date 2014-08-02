@@ -1,13 +1,18 @@
-module.exports = Engine;
+var inherits = require('inherits');
+var EventEmitter = require('events').EventEmitter;
 
-function Engine (player, rain) {
-    if (!(this instanceof Engine)) return new Engine(player, rain);
+module.exports = Engine;
+inherits(Engine, EventEmitter);
+
+function Engine (fn) {
+    if (!(this instanceof Engine)) return new Engine(fn);
+    EventEmitter.call(this);
+    
     this.running = false;
     this.last = Date.now();
-    this.player = player;
-    this.rain = rain;
     this.time = 0;
     this._timers = [];
+    if (fn) this.on('tick', fn);
 }
 
 Engine.prototype.run = function () {
@@ -39,12 +44,9 @@ Engine.prototype.tick = function () {
     var now = Date.now();
     var dt = now - this.last;
     this.last = now;
-    
-    this.player.tick(dt);
-    this.rain.tick(dt);
-    this.rain.check(this.player);
-    
     this.time += dt;
+    this.emit('tick', dt);
+    
     var due = [];
     for (var i = 0; i < this._timers.length; i++) {
         var t = this._timers[i];
