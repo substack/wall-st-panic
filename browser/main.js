@@ -4,16 +4,21 @@ var createRain = require('./rain.js');
 
 var root = document.querySelector('#root');
 
-xhr({ uri: '/game.svg' }, function (err, res, body) {
+var url = require('url');
+var imfile = url.resolve(location.href, 'game.svg');
+
+xhr({ uri: imfile }, function (err, res, body) {
     root.innerHTML = body;
     var player = createPlayer(root.querySelector('svg #player'));
+    var bank = require('./bank.js')(root);
+    window.bank = bank;
     
     var emoney = root.querySelector('svg #money');
     emoney.parentNode.removeChild(emoney);
     
     var rain = createRain(emoney);
     rain.on('cash', function (n) {
-        console.log(n);
+        //console.log(n);
     });
     rain.appendTo(root.querySelector('svg'));
     
