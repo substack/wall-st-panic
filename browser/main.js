@@ -19,7 +19,7 @@ xhr({ uri: imfile }, function (err, res, body) {
     
     var rain = Rain(emoney);
     rain.on('cash', function (n) {
-        //console.log(n);
+        console.log('MONEY', n);
     });
     rain.appendTo(root.querySelector('svg'));
     

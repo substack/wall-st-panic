@@ -13,7 +13,7 @@ function Bank (root) {
     this.numbers = [];
     this.pos = [];
     this.elements = [];
-    this.root = root;
+    this.root = root.querySelector('svg #zero').parentNode;
     
     numberNames.forEach(function (n) {
         var elem = root.querySelector('svg #' + n);
@@ -39,8 +39,9 @@ Bank.prototype.set = function (n) {
         var p = this.pos[i];
         var o = this.pos[Number(d)];
         
-        //var tr = (p.left - o.left) + ',' + (p.top - o.top);
-        //elem.setAttribute('transform', 'translate(' + tr + ')');
+        var tr = (p.left - o.left) + ',' + (p.top - o.top);
+        elem.setAttribute('transform', 'translate(' + tr + ')');
+        
         this.root.appendChild(elem);
         this.elements.push(elem);
     }

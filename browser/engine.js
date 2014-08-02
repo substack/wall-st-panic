@@ -66,8 +66,8 @@ Engine.prototype.setInterval = function (fn, ts) {
     var last = self.time;
     var f = function () {
         fn();
-        //var skew = ts - (self.time - last);
-        var skew = 0;
+        var skew = ts - (self.time - last);
+        last = self.time;
         self._timers.push([ f, self.time + ts + skew ]);
     };
     this._timers.push([ f, ts ]);
