@@ -1,9 +1,4 @@
 var createElement = require('./element.js');
-var numberNames = [ 
-    'zero', 'one', 'two', 'three', 'four',
-    'five', 'six', 'seven', 'eight', 'nine'
-];
-
 module.exports = Bank;
 
 function Bank (root) {
@@ -13,31 +8,34 @@ function Bank (root) {
     this.numbers = [];
     this.pos = [];
     this.elements = [];
-    this.root = root.querySelector('svg #zero').parentNode;
+    this.root = root.querySelector('svg #digit0').parentNode;
     
-    numberNames.forEach(function (n) {
-        var elem = root.querySelector('svg #' + n);
+    for (var i = 0; i <= 20; i++) {
+        var elem = root.querySelector('svg #digit' + i);
+        if (i < 10) self.numbers.push(elem);
         self.pos.push(elem.getBoundingClientRect());
-        self.numbers.push(elem);
         elem.parentNode.removeChild(elem);
-    });
+    }
+    
     this.cash = 0;
 }
 
 Bank.prototype.set = function (n) {
     this.cash = n;
-    var digits = String(n).split('');
+    var digits = String(n).split('').reverse();
+    if (digits.length > 21) digits = Array(22).join('9');
+    
     for (var i = 0; i < this.elements.length; i++) {
         var elem = this.elements[i];
         elem.parentNode.removeChild(elem);
     }
     this.elements = [];
-    var sh = 10 - digits.length;
     
     for (var i = 0; i < digits.length; i++) {
         var d = digits[i];
         var elem = this.numbers[d].cloneNode(true);
-        var p = this.pos[sh+i];
+        
+        var p = this.pos[i];
         var o = this.pos[d];
         
         var dx = p.left - o.left;

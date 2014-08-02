@@ -12,14 +12,14 @@ xhr({ uri: imfile }, function (err, res, body) {
     root.innerHTML = body;
     var player = Player(root.querySelector('svg #player'));
     var bank = require('./bank.js')(root);
-    window.bank = bank;
     
     var emoney = root.querySelector('svg #money');
     emoney.parentNode.removeChild(emoney);
     
     var rain = Rain(emoney);
+    bank.set(1000000);
     rain.on('cash', function (n) {
-        console.log('MONEY', n);
+        bank.deposit(n);
     });
     rain.appendTo(root.querySelector('svg'));
     
