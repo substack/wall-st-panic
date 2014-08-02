@@ -23,10 +23,6 @@ xhr({ uri: imfile }, function (err, res, body) {
     });
     rain.appendTo(root.querySelector('svg'));
     
-    setInterval(function () {
-        rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
-    }, 2000);
-    
     window.addEventListener('keydown', function (ev) {
         var name = ev.keyIdentifier;
         if (name === 'Right') {
@@ -47,5 +43,8 @@ xhr({ uri: imfile }, function (err, res, body) {
     });
     
     var engine = Engine(player, rain);
+    engine.setInterval(function () {
+        rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
+    }, 500);
     engine.run();
 });
