@@ -1,4 +1,4 @@
-var createElement = require('./element.js');
+var createElement = require('svg-create-element');
 var createMoney = require('./money.js');
 var collide = require('box-collide');
 var inherits = require('inherits');

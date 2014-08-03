@@ -1,6 +1,6 @@
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
-var createElement = require('./element.js');
+var createElement = require('svg-create-element');
 
 module.exports = Money;
 inherits(Money, EventEmitter);

@@ -1,4 +1,4 @@
-var createElement = require('./element.js');
+var createElement = require('svg-create-element');
 module.exports = Bank;
 
 function Bank (root) {
