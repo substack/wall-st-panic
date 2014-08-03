@@ -4,14 +4,17 @@ var EventEmitter = require('events').EventEmitter;
 module.exports = Engine;
 inherits(Engine, EventEmitter);
 
-function Engine (fn) {
-    if (!(this instanceof Engine)) return new Engine(fn);
+function Engine (fn, opts) {
+    if (!(this instanceof Engine)) return new Engine(fn, opts);
     EventEmitter.call(this);
+    if (!opts) opts = {};
     
     this.running = false;
     this.last = Date.now();
     this.time = 0;
     this._timers = [];
+    this._fpsTarget = opts.fps || 60;
+    
     if (fn) this.on('tick', fn);
 }
 
@@ -23,9 +26,11 @@ Engine.prototype.run = function () {
     
     (function tick () {
         self.tick();
+        var elapsed = (Date.now() - self.last) / 1000;
+        var delay = Math.max(0, (1 / self._fpsTarget) - elapsed);
         setTimeout(function () {
             window.requestAnimationFrame(tick);
-        }, 20);
+        }, delay * 1000);
     })();
 };
 
