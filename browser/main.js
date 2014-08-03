@@ -3,7 +3,6 @@ var Rain = require('./rain.js');
 var Loop = require('frame-loop');
 var Sprite = require('box-sprite-svg');
 var collide = require('box-collide');
-var keynames = require('keynames');
 
 var fs = require('fs');
 var svgsrc = fs.readFileSync(__dirname + '/../static/images/game.svg', 'utf8');
@@ -38,17 +37,16 @@ rain.on('cash', function (n) {
 rain.appendTo(root.querySelector('svg'));
 
 window.addEventListener('keydown', function (ev) {
-    var name = keynames[ev.which];
-    if (name === 'right') {
+    if (ev.which === 39) { // right arrow
         player.right();
     }
-    else if (name === 'left') {
+    else if (ev.which === 37) { // left arrow
         player.left();
     }
-    else if (ev.which === 32) {
+    else if (ev.which === 32) { // space bar
         player.jump();
     }
-    else if (name === 'f1' || ev.keyIdentifier === 'F1') {
+    else if (ev.which === 112) { // f1
         engine.toggle();
     }
     else return;
