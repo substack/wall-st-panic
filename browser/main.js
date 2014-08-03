@@ -1,6 +1,8 @@
 var Player = require('./player.js');
 var Rain = require('./rain.js');
-var Engine = require('./engine.js');
+var Loop = require('frame-loop');
+var Sprite = require('box-sprite-svg');
+var collide = require('box-collide');
 
 var fs = require('fs');
 var svgsrc = fs.readFileSync(__dirname + '/../static/images/game.svg', 'utf8');
@@ -8,17 +10,19 @@ var svgsrc = fs.readFileSync(__dirname + '/../static/images/game.svg', 'utf8');
 var root = document.querySelector('#root');
 root.innerHTML = svgsrc;
 
-var sprites = {
+var elements = {
     homeless: root.querySelector('svg #homeless'),
     protester: root.querySelector('svg #protester'),
     tent: root.querySelector('svg #tent'),
     barrel: root.querySelector('svg #barrel')
 };
-Object.keys(sprites).forEach(function (key) {
-    sprites[key].parentNode.removeChild(sprites[key]);
+Object.keys(elements).forEach(function (key) {
+    elements[key].parentNode.removeChild(elements[key]);
 });
 
+var pnode = root.querySelector('svg #player').parentNode;
 var player = Player(root.querySelector('svg #player'));
+
 var bank = require('./bank.js')(root);
 var eparent = player.element.parentNode;
 
@@ -51,12 +55,25 @@ window.addEventListener('keydown', function (ev) {
     ev.preventDefault();
 });
 
-var engine = Engine(function (dt) {
+var engine = Loop(function (dt) {
     player.tick(dt);
     rain.tick(dt);
+    h.tick(dt);
     rain.check(player);
+    if (collide(h.bbox(), player.bbox())) {
+        bank.deposit(-Math.floor(Math.random() * 500));
+    }
 });
+
 engine.setInterval(function () {
     rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
 }, 500);
+
+var h = Sprite(elements.homeless.cloneNode(true));
+h.appendTo(pnode);
+engine.setInterval(function () {
+    var x = Math.floor(Math.random() * 3) - 1;
+    h.velocity.x = x * 100;
+}, 500);
+
 engine.run();

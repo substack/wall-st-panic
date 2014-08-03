@@ -10,6 +10,7 @@
     "ecstatic": "~0.5.3",
     "inherits": "^2.0.1",
     "box-collide": "^1.0.0",
+    "frame-loop": "^1.0.0",
     "brfs": "^1.2.0"
   },
   "devDependencies": {
