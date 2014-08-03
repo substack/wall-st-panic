@@ -66,11 +66,19 @@ var engine = Loop(function (dt) {
 });
 
 engine.setInterval(function () {
-    rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
+    if (Math.random() > 0.5) {
+        rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
+    }
 }, 500);
 
 var h = Sprite(elements.homeless.cloneNode(true));
+h.on('tick', function (dt) {
+    h.position.x = Math.max(-500, Math.min(800, h.position.x));
+});
 h.appendTo(pnode);
+h.position.x = 600;
+h.tick(0);
+
 engine.setInterval(function () {
     var x = Math.floor(Math.random() * 3) - 1;
     h.velocity.x = x * 100;
