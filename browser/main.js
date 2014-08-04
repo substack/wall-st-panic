@@ -13,6 +13,15 @@ game.on('collide', function (sp) {
     else if (sp.name === 'homeless') {
         game.bank.deposit(-Math.floor(Math.random() * 500));
     }
+    else if (sp.name === 'protester') {
+        game.bank.deposit(-Math.floor(Math.random() * 2000));
+    }
+    else if (sp.name === 'barrel') {
+        game.bank.deposit(-Math.floor(Math.random() * 1000));
+    }
+    else if (sp.name === 'tent') {
+        game.bank.deposit(-Math.floor(Math.random() * 5000));
+    }
 });
 
 var engine = Loop(function (dt) { game.tick(dt) });
@@ -43,13 +52,28 @@ window.addEventListener('keyup', function (ev) {
     else if (ev.which === 37 && v.x < 0) game.player.stand();
 });
 
-var h = game.add('homeless');
-h.on('tick', function (dt) {
-    h.position.x = Math.max(-500, Math.min(800, h.position.x));
-});
-h.position.x = 600;
+function add (name) {
+    var h = game.add(name);
+    h.on('tick', function (dt) {
+        h.position.x = Math.max(-500, Math.min(800, h.position.x));
+    });
+    h.position.x = -1000 * Math.random() + 500;
+    
+    if (name === 'homeless') {
+        engine.setInterval(function () {
+            var x = Math.floor(Math.random() * 3) - 1;
+            h.velocity.x = x * 100;
+        }, 500);
+    }
+    else if (name === 'protester') {
+        engine.setInterval(function () {
+            var x = Math.floor(Math.random() * 3) - 1;
+            h.velocity.x = x * 200;
+        }, 200);
+    }
+}
 
-engine.setInterval(function () {
-    var x = Math.floor(Math.random() * 3) - 1;
-    h.velocity.x = x * 100;
-}, 500);
+for (var i = 0; i < 10; i++) add('homeless');
+for (var i = 0; i < 10; i++) add('protester');
+for (var i = 0; i < 2; i++) add('tent');
+for (var i = 0; i < 2; i++) add('barrel');
