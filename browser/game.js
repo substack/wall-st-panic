@@ -62,11 +62,13 @@ Game.prototype.appendTo = function (target) {
 };
 
 Game.prototype.add = function (name, opts) {
+    var self = this;
     var sp = Sprite(this.elements[name].cloneNode(true));
     if (!opts) opts = {};
     sp.name = name;
-    sp.tick(0);
-    sp.appendTo(this.parents[name]);
+    sp.once('tick', function () {
+        sp.appendTo(self.parents[name])
+    });
     this.sprites.push(sp);
     return sp;
 };
