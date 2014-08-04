@@ -1,17 +1,26 @@
 var Loop = require('frame-loop');
 var Game = require('./game.js');
+var Money = require('./money.js');
 
 var game = Game().appendTo('#root');
 game.bank.set(1000000);
 
 game.on('collide', function (sp) {
-    game.bank.deposit(-Math.floor(Math.random() * 500));
+    if (sp.name === 'money') {
+        game.bank.deposit(sp.amount);
+        game.remove(sp);
+    }
+    else if (sp.name === 'homeless') {
+        game.bank.deposit(-Math.floor(Math.random() * 500));
+    }
 });
 
 var engine = Loop(function (dt) { game.tick(dt) });
 engine.setInterval(function () {
     if (Math.random() > 0.5) {
-        game.rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
+        var amount = Math.floor(Math.random() * 1e7 + 1e4);
+        var cash = Money(game.add('money'), amount);
+        cash.on('miss', function () { game.remove(cash) });
     }
 }, 500);
 
@@ -27,7 +36,7 @@ window.addEventListener('keydown', function (ev) {
 });
 
 /*
-var h = game.create('homeless');
+var h = game.add('homeless');
 h.on('tick', function (dt) {
     h.position.x = Math.max(-500, Math.min(800, h.position.x));
 });

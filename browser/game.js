@@ -1,6 +1,5 @@
 var Bank = require('./bank.js');
 var Player = require('./player.js');
-var Rain = require('./rain.js');
 
 var Sprite = require('box-sprite-svg');
 var collide = require('box-collide');
@@ -38,26 +37,17 @@ function Game () {
     });
     
     this.player = Player(root.querySelector('#player'));
-    
-    this.rain = Rain(this.elements.money);
-    this.rain.on('cash', function (n) {
-        self.bank.deposit(n);
-    });
-    this.rain.appendTo(root.querySelector('svg'));
-    
-    this.agitators = [];
+    this.sprites = [];
 }
 
 Game.prototype.tick = function (dt) {
     this.player.tick(dt);
-    this.rain.tick(dt);
+    var pbox = this.player.bbox();
     
-    this.rain.check(this.player);
-    
-    for (var i = 0; i < this.agitators.length; i++) {
-        var a = this.agitators[i];
+    for (var i = 0; i < this.sprites.length; i++) {
+        var a = this.sprites[i];
         a.tick(dt);
-        if (collide(a.bbox(), player.bbox())) {
+        if (collide(a.bbox(), pbox)) {
             this.emit('collide', a);
         }
     }
@@ -71,9 +61,18 @@ Game.prototype.appendTo = function (target) {
     return this;
 };
 
-Game.prototype.create = function (name) {
+Game.prototype.add = function (name, opts) {
     var sp = Sprite(this.elements[name].cloneNode(true));
+    if (!opts) opts = {};
+    sp.name = name;
+    sp.tick(0);
     sp.appendTo(this.parents[name]);
-    this.agitators.push(sp);
+    this.sprites.push(sp);
     return sp;
+};
+
+Game.prototype.remove = function (sp) {
+    var ix = this.sprites.indexOf(sp);
+    this.sprites.splice(ix, 1);
+    sp.element.parentNode.removeChild(sp.element);
 };
