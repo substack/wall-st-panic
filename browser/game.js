@@ -28,10 +28,12 @@ function Game () {
         money: '#money'
     };
     this.parents = {};
+    this.spriteList = {};
     
     Object.keys(self.elements).forEach(function (key) {
         var e = root.querySelector('svg ' + self.elements[key]);
         self.elements[key] = e;
+        self.spriteList[key] = [];
         self.parents[key] = e.parentNode;
         e.parentNode.removeChild(e);
     });
@@ -63,7 +65,10 @@ Game.prototype.appendTo = function (target) {
 
 Game.prototype.add = function (name, opts) {
     var self = this;
-    var sp = Sprite(this.elements[name].cloneNode(true));
+    var sp = this.spriteList[name].length
+        ? this.spriteList[name].shift()
+        : Sprite(this.elements[name].cloneNode(true))
+    ;
     if (!opts) opts = {};
     sp.name = name;
     sp.once('tick', function () {
@@ -76,5 +81,6 @@ Game.prototype.add = function (name, opts) {
 Game.prototype.remove = function (sp) {
     var ix = this.sprites.indexOf(sp);
     this.sprites.splice(ix, 1);
-    sp.element.parentNode.removeChild(sp.element);
+    sp.reset();
+    this.spriteList[sp.name].push(sp);
 };

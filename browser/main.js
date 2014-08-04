@@ -20,7 +20,9 @@ engine.setInterval(function () {
     if (Math.random() > 0.5) {
         var amount = Math.floor(Math.random() * 1e7 + 1e4);
         var cash = Money(game.add('money'), amount);
-        cash.on('miss', function () { game.remove(cash) });
+        cash.on('miss', function () {
+            game.remove(cash);
+        });
     }
 }, 500);
 
