@@ -37,6 +37,12 @@ window.addEventListener('keydown', function (ev) {
     ev.preventDefault();
 });
 
+window.addEventListener('keyup', function (ev) {
+    var v = game.player.velocity;
+    if (ev.which === 39 && v.x > 0) game.player.stand();
+    else if (ev.which === 37 && v.x < 0) game.player.stand();
+});
+
 var h = game.add('homeless');
 h.on('tick', function (dt) {
     h.position.x = Math.max(-500, Math.min(800, h.position.x));

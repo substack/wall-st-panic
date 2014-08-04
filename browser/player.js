@@ -14,6 +14,7 @@ function Player (elem) {
         if (p.y > 0) {
             this.velocity.y = 0;
             this.acceleration.y = 0;
+            this.velocity.x = this.xdir;
             p.y = 0;
         }
     });
@@ -26,11 +27,19 @@ Player.prototype.jump = function () {
 };
 
 Player.prototype.right = function () {
+    this.xdir = 350;
     if (this.position.y !== 0) return;
     this.velocity.x = 350;
 };
 
 Player.prototype.left = function () {
+    this.xdir = -350;
     if (this.position.y !== 0) return;
     this.velocity.x = -350;
+};
+
+Player.prototype.stand = function () {
+    this.xdir = 0;
+    if (this.position.y !== 0) return;
+    this.velocity.x = 0;
 };
