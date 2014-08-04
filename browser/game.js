@@ -22,7 +22,6 @@ function Game () {
     root.innerHTML = imsrc;
     
     this.elements = {
-        player: '#player',
         homeless: '#homeless',
         protester: '#protester',
         tent: '#tent',
@@ -39,8 +38,8 @@ function Game () {
     });
     
     this.bank = Bank(root);
-    this.bank.set(0);
-    this.player = Player(this.elements.player).appendTo(this.parents.player);
+    this.bank.set(1000000);
+    this.player = Player(root.querySelector('#player'));
     
     this.rain = Rain(this.elements.money);
     this.rain.on('cash', function (n) {
@@ -52,20 +51,18 @@ function Game () {
 }
 
 Game.prototype.tick = function (dt) {
-    var self = this;
-    
     this.player.tick(dt);
     this.rain.tick(dt);
     
-    var pbox = this.player.bbox();
-    this.rain.check(pbox);
+    this.rain.check(this.player);
     
-    this.agitators.forEach(function (a) {
+    for (var i = 0; i < this.agitators.length; i++) {
+        var a = this.agitators[i];
         a.tick(dt);
-        if (collide(a.bbox(), pbox)) {
-            self.emit('collide', a);
+        if (collide(a.bbox(), player.bbox())) {
+            this.emit('collide', a);
         }
-    });
+    }
 };
 
 Game.prototype.appendTo = function (target) {

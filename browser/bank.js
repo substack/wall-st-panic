@@ -8,10 +8,10 @@ function Bank (root) {
     this.numbers = [];
     this.pos = [];
     this.elements = [];
-    this.root = root.querySelector('svg #digit0').parentNode;
+    this.root = root.querySelector('#digit0').parentNode;
     
     for (var i = 0; i <= 20; i++) {
-        var elem = root.querySelector('svg #digit' + i);
+        var elem = root.querySelector('#digit' + i);
         if (i < 10) self.numbers.push(elem);
         self.pos.push(elem.getBoundingClientRect());
         elem.parentNode.removeChild(elem);

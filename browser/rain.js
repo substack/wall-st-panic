@@ -40,11 +40,11 @@ Rain.prototype.tick = function (dt) {
     }
 };
 
-Rain.prototype.check = function (pbox) {
+Rain.prototype.check = function (player) {
     for (var i = 0; i < this.money.length; i++) {
         var m = this.money[i];
         
-        if (collide(pbox, m.bbox())) {
+        if (collide(player.bbox(), m.bbox())) {
             this.remove(m);
             this.emit('cash', m.cash)
         }
