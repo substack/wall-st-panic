@@ -26,9 +26,11 @@ Player.prototype.jump = function () {
 };
 
 Player.prototype.right = function () {
+    if (this.position.y !== 0) return;
     this.velocity.x = 350;
 };
 
 Player.prototype.left = function () {
+    if (this.position.y !== 0) return;
     this.velocity.x = -350;
 };

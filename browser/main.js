@@ -37,7 +37,6 @@ window.addEventListener('keydown', function (ev) {
     ev.preventDefault();
 });
 
-/*
 var h = game.add('homeless');
 h.on('tick', function (dt) {
     h.position.x = Math.max(-500, Math.min(800, h.position.x));
@@ -48,4 +47,3 @@ engine.setInterval(function () {
     var x = Math.floor(Math.random() * 3) - 1;
     h.velocity.x = x * 100;
 }, 500);
-*/
