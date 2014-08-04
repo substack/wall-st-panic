@@ -37,8 +37,6 @@ function Game () {
         e.parentNode.removeChild(e);
     });
     
-    this.bank = Bank(root);
-    this.bank.set(1000000);
     this.player = Player(root.querySelector('#player'));
     
     this.rain = Rain(this.elements.money);
@@ -68,6 +66,8 @@ Game.prototype.tick = function (dt) {
 Game.prototype.appendTo = function (target) {
     if (typeof target === 'string') target = document.querySelector(target);
     target.appendChild(this.element);
+    this.bank = Bank(this.element);
+    this.bank.set(1000000);
     return this;
 };
 

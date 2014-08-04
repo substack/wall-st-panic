@@ -9,10 +9,6 @@ game.on('collide', function (sp) {
 });
 
 var engine = Loop(function (dt) { game.tick(dt) });
-engine.on('fps', function (fps) {
-    console.log('fps=', fps);
-});
-
 engine.setInterval(function () {
     if (Math.random() > 0.5) {
         game.rain.drop(Math.floor(Math.random() * 1e7 + 1e4));
