@@ -25,6 +25,7 @@ function Game () {
         protester: '#protester',
         tent: '#tent',
         barrel: '#barrel',
+        blackblock: '#blackblock',
         money: '#money'
     };
     this.parents = {};

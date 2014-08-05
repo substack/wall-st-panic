@@ -16,6 +16,9 @@ game.on('collide', function (sp) {
     else if (sp.name === 'protester') {
         game.bank.deposit(-Math.floor(Math.random() * 2000));
     }
+    else if (sp.name === 'blackblock') {
+        game.bank.deposit(-Math.floor(Math.random() * 50000));
+    }
     else if (sp.name === 'barrel') {
         game.bank.deposit(-Math.floor(Math.random() * 1000));
     }
@@ -71,9 +74,16 @@ function add (name) {
             h.velocity.x = x * 200;
         }, 200);
     }
+    else if (name === 'blackblock') {
+        engine.setInterval(function () {
+            var x = Math.floor(Math.random() * 3) - 1;
+            h.velocity.x = x * 300;
+        }, 2000);
+    }
 }
 
 for (var i = 0; i < 10; i++) add('homeless');
 for (var i = 0; i < 10; i++) add('protester');
 for (var i = 0; i < 2; i++) add('tent');
 for (var i = 0; i < 2; i++) add('barrel');
+for (var i = 0; i < 5; i++) add('blackblock');
