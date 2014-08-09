@@ -14,10 +14,13 @@
     "brfs": "^1.2.0"
   },
   "devDependencies": {
-    "tape": "^2.13.2",
-    "watchify": "^1.0.0",
+    "box-sprite-svg": "^1.2.0",
     "browserify": "^5.9.1",
-    "uglify-js": "^2.4.8"
+    "minimist": "^0.2.0",
+    "svg-create-element": "^1.0.0",
+    "tape": "^2.13.2",
+    "uglify-js": "^2.4.8",
+    "watchify": "^1.0.0"
   },
   "browserify": {
     "transform": "brfs"
